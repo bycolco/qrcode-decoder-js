@@ -244,82 +244,85 @@ function QRCodeDataBlockReader(blocks,  version,  numErrorCorrectionCode)
 			return unicodeString;
 		}
 
-	this.__defineGetter__("DataByte", function()
-	{
-		var output = new Array();
-		var MODE_NUMBER = 1;
-	    var MODE_ROMAN_AND_NUMBER = 2;
-	    var MODE_8BIT_BYTE = 4;
-	    var MODE_KANJI = 8;
-		do 
-					{
-						var mode = this.NextMode();
-						//canvas.println("mode: " + mode);
-						if (mode == 0)
-						{
-							if (output.length > 0)
-								break;
-							else
-								throw "Empty data block";
-						}
-						//if (mode != 1 && mode != 2 && mode != 4 && mode != 8)
-						//	break;
-						//}
-						if (mode != MODE_NUMBER && mode != MODE_ROMAN_AND_NUMBER && mode != MODE_8BIT_BYTE && mode != MODE_KANJI)
-						{
-							/*					canvas.println("Invalid mode: " + mode);
-							mode = guessMode(mode);
-							canvas.println("Guessed mode: " + mode); */
-							throw "Invalid mode: " + mode + " in (block:" + this.blockPointer + " bit:" + this.bitPointer + ")";
-						}
-						dataLength = this.getDataLength(mode);
-						if (dataLength < 1)
-							throw "Invalid data length: " + dataLength;
-						//canvas.println("length: " + dataLength);
-						switch (mode)
-						{
-							
-							case MODE_NUMBER: 
-								//canvas.println("Mode: Figure");
-								var temp_str = this.getFigureString(dataLength);
-								var ta = new Array(temp_str.length);
-								for(var j=0;j<temp_str.length;j++)
-									ta[j]=temp_str.charCodeAt(j);
-								output.push(ta);
-								break;
-							
-							case MODE_ROMAN_AND_NUMBER: 
-								//canvas.println("Mode: Roman&Figure");
-								var temp_str = this.getRomanAndFigureString(dataLength);
-								var ta = new Array(temp_str.length);
-								for(var j=0;j<temp_str.length;j++)
-									ta[j]=temp_str.charCodeAt(j);
-								output.push(ta );
-								//output.Write(SystemUtils.ToByteArray(temp_sbyteArray2), 0, temp_sbyteArray2.Length);
-								break;
-							
-							case MODE_8BIT_BYTE: 
-								//canvas.println("Mode: 8bit Byte");
-								//sbyte[] temp_sbyteArray3;
-								var temp_sbyteArray3 = this.get8bitByteArray(dataLength);
-								output.push(temp_sbyteArray3);
-								//output.Write(SystemUtils.ToByteArray(temp_sbyteArray3), 0, temp_sbyteArray3.Length);
-								break;
-							
-							case MODE_KANJI: 
-								//canvas.println("Mode: Kanji");
-								//sbyte[] temp_sbyteArray4;
-								//temp_sbyteArray4 = SystemUtils.ToSByteArray(SystemUtils.ToByteArray(getKanjiString(dataLength)));
-								//output.Write(SystemUtils.ToByteArray(temp_sbyteArray4), 0, temp_sbyteArray4.Length);
-                                var temp_str = this.getKanjiString(dataLength);
-								output.push(temp_str);
-								break;
-							}
-						//			
-						//canvas.println("DataLength: " + dataLength);
-						//Console.out.println(dataString);
-					}
-					while (true);
-		return output;
+  Object.defineProperty(this, "DataByte", {
+    get: function() {
+
+      var output = new Array();
+      var MODE_NUMBER = 1;
+      var MODE_ROMAN_AND_NUMBER = 2;
+      var MODE_8BIT_BYTE = 4;
+      var MODE_KANJI = 8;
+      do
+      {
+        var mode = this.NextMode();
+        //canvas.println("mode: " + mode);
+        if (mode == 0)
+        {
+          if (output.length > 0)
+            break;
+          else
+            throw "Empty data block";
+        }
+        //if (mode != 1 && mode != 2 && mode != 4 && mode != 8)
+        //	break;
+        //}
+        if (mode != MODE_NUMBER && mode != MODE_ROMAN_AND_NUMBER && mode != MODE_8BIT_BYTE && mode != MODE_KANJI)
+        {
+          /*					canvas.println("Invalid mode: " + mode);
+           mode = guessMode(mode);
+           canvas.println("Guessed mode: " + mode); */
+          throw "Invalid mode: " + mode + " in (block:" + this.blockPointer + " bit:" + this.bitPointer + ")";
+        }
+        dataLength = this.getDataLength(mode);
+        if (dataLength < 1)
+          throw "Invalid data length: " + dataLength;
+        //canvas.println("length: " + dataLength);
+        switch (mode)
+        {
+
+          case MODE_NUMBER:
+            //canvas.println("Mode: Figure");
+            var temp_str = this.getFigureString(dataLength);
+            var ta = new Array(temp_str.length);
+            for(var j=0;j<temp_str.length;j++)
+              ta[j]=temp_str.charCodeAt(j);
+            output.push(ta);
+            break;
+
+          case MODE_ROMAN_AND_NUMBER:
+            //canvas.println("Mode: Roman&Figure");
+            var temp_str = this.getRomanAndFigureString(dataLength);
+            var ta = new Array(temp_str.length);
+            for(var j=0;j<temp_str.length;j++)
+              ta[j]=temp_str.charCodeAt(j);
+            output.push(ta );
+            //output.Write(SystemUtils.ToByteArray(temp_sbyteArray2), 0, temp_sbyteArray2.Length);
+            break;
+
+          case MODE_8BIT_BYTE:
+            //canvas.println("Mode: 8bit Byte");
+            //sbyte[] temp_sbyteArray3;
+            var temp_sbyteArray3 = this.get8bitByteArray(dataLength);
+            output.push(temp_sbyteArray3);
+            //output.Write(SystemUtils.ToByteArray(temp_sbyteArray3), 0, temp_sbyteArray3.Length);
+            break;
+
+          case MODE_KANJI:
+            //canvas.println("Mode: Kanji");
+            //sbyte[] temp_sbyteArray4;
+            //temp_sbyteArray4 = SystemUtils.ToSByteArray(SystemUtils.ToByteArray(getKanjiString(dataLength)));
+            //output.Write(SystemUtils.ToByteArray(temp_sbyteArray4), 0, temp_sbyteArray4.Length);
+            var temp_str = this.getKanjiString(dataLength);
+            output.push(temp_str);
+            break;
+        }
+        //
+        //canvas.println("DataLength: " + dataLength);
+        //Console.out.println(dataString);
+      }
+      while (true);
+
+      return output;
+    }
 	});
 }

@@ -29,22 +29,26 @@ function AlignmentPattern(posX, posY,  estimatedModuleSize)
 	this.y=posY;
 	this.count = 1;
 	this.estimatedModuleSize = estimatedModuleSize;
-	
-	this.__defineGetter__("EstimatedModuleSize", function()
-	{
-		return this.estimatedModuleSize;
-	}); 
-	this.__defineGetter__("Count", function()
-	{
-		return this.count;
+
+  Object.defineProperty(this, "EstimatedModuleSize", {
+    get: function () {
+      return this.estimatedModuleSize;
+    }
+  });
+  Object.defineProperty(this, "Count", {
+    get: function() {
+      return this.count;
+    }
 	});
-	this.__defineGetter__("X", function()
-	{
-		return Math.floor(this.x);
+  Object.defineProperty(this, "X", {
+    get: function() {
+      return Math.floor(this.x);
+    }
 	});
-	this.__defineGetter__("Y", function()
-	{
-		return Math.floor(this.y);
+  Object.defineProperty(this, "Y", {
+    get: function() {
+      return Math.floor(this.y);
+    }
 	});
 	this.incrementCount = function()
 	{

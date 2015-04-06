@@ -46,14 +46,16 @@ function GF256( primitive)
 	this.zero = new GF256Poly(this, new Array(at0));
 	var at1=new Array(1);at1[0]=1;
 	this.one = new GF256Poly(this, new Array(at1));
-	
-	this.__defineGetter__("Zero", function()
-	{
-		return this.zero;
+
+  Object.defineProperty(this, "Zero", {
+    get: function() {
+      return this.zero;
+    }
 	});
-	this.__defineGetter__("One", function()
-	{
-		return this.one;
+  Object.defineProperty(this, "One", {
+    get: function() {
+      return this.one;
+    }
 	});
 	this.buildMonomial=function( degree,  coefficient)
 		{

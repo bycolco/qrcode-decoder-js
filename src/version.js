@@ -28,14 +28,16 @@ function ECB(count,  dataCodewords)
 {
 	this.count = count;
 	this.dataCodewords = dataCodewords;
-	
-	this.__defineGetter__("Count", function()
-	{
-		return this.count;
+
+  Object.defineProperty(this, "Count", {
+    get: function() {
+      return this.count;
+    }
 	});
-	this.__defineGetter__("DataCodewords", function()
-	{
-		return this.dataCodewords;
+  Object.defineProperty(this, "DataCodewords", {
+    get: function() {
+      return this.dataCodewords;
+    }
 	});
 }
 
@@ -46,25 +48,27 @@ function ECBlocks( ecCodewordsPerBlock,  ecBlocks1,  ecBlocks2)
 		this.ecBlocks = new Array(ecBlocks1, ecBlocks2);
 	else
 		this.ecBlocks = new Array(ecBlocks1);
-	
-	this.__defineGetter__("ECCodewordsPerBlock", function()
-	{
-		return this.ecCodewordsPerBlock;
+
+  Object.defineProperty(this, "ECCodewordsPerBlock", {
+    get: function() {
+      return this.ecCodewordsPerBlock;
+    }
 	});
-	
-	this.__defineGetter__("TotalECCodewords", function()
-	{
-		return  this.ecCodewordsPerBlock * this.NumBlocks;
+
+  Object.defineProperty(this, "TotalECCodewords", {
+    get: function() {
+      return  this.ecCodewordsPerBlock * this.NumBlocks;
+    }
 	});
-	
-	this.__defineGetter__("NumBlocks", function()
-	{
-		var total = 0;
-		for (var i = 0; i < this.ecBlocks.length; i++)
-		{
-			total += this.ecBlocks[i].length;
-		}
-		return total;
+
+  Object.defineProperty(this, "NumBlocks", {
+    get: function() {
+      var total = 0;
+      for (var i = 0; i < this.ecBlocks.length; i++) {
+        total += this.ecBlocks[i].length;
+      }
+      return total;
+    }
 	});
 	
 	this.getECBlocks=function()
@@ -88,23 +92,27 @@ function Version( versionNumber,  alignmentPatternCenters,  ecBlocks1,  ecBlocks
 		total += ecBlock.Count * (ecBlock.DataCodewords + ecCodewords);
 	}
 	this.totalCodewords = total;
-	
-	this.__defineGetter__("VersionNumber", function()
-	{
-		return  this.versionNumber;
+
+  Object.defineProperty(this, "VersionNumber", {
+    get: function() {
+      return  this.versionNumber;
+    }
 	});
-	
-	this.__defineGetter__("AlignmentPatternCenters", function()
-	{
-		return  this.alignmentPatternCenters;
+
+  Object.defineProperty(this, "AlignmentPatternCenters", {
+    get: function() {
+      return  this.alignmentPatternCenters;
+    }
 	});
-	this.__defineGetter__("TotalCodewords", function()
-	{
-		return  this.totalCodewords;
+  Object.defineProperty(this, "TotalCodewords", {
+    get: function() {
+      return  this.totalCodewords;
+    }
 	});
-	this.__defineGetter__("DimensionForVersion", function()
-	{
-		return  17 + 4 * this.versionNumber;
+  Object.defineProperty(this, "DimensionForVersion", {
+    get: function() {
+      return  17 + 4 * this.versionNumber;
+    }
 	});
 	
 	this.buildFunctionPattern=function()

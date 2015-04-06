@@ -27,14 +27,16 @@ function DataBlock(numDataCodewords,  codewords)
 {
 	this.numDataCodewords = numDataCodewords;
 	this.codewords = codewords;
-	
-	this.__defineGetter__("NumDataCodewords", function()
-	{
-		return this.numDataCodewords;
+
+  Object.defineProperty(this, "NumDataCodewords", {
+    get: function() {
+      return this.numDataCodewords;
+    }
 	});
-	this.__defineGetter__("Codewords", function()
-	{
-		return this.codewords;
+  Object.defineProperty(this, "Codewords", {
+    get: function() {
+      return this.codewords;
+    }
 	});
 }	
 	
